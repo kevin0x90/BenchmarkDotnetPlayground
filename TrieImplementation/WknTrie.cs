@@ -4,9 +4,9 @@ namespace TrieImplementation
 {
   public sealed class WknTrie
   {
-    private readonly WknTrie?[] _childNodes = new WknTrie?[36];
+    private readonly WknTrie[] _childNodes = new WknTrie[36];
 
-    private readonly bool _isWordEnd;
+    private bool _isWordEnd;
 
     public WknTrie(bool isWordEnd)
     {
@@ -19,17 +19,18 @@ namespace TrieImplementation
 
       unsafe
       {
-        for (int i = 0, index, length = wkn.Length, lastIndex = length - 1; i < length; ++i)
+        for (int i = 0, index, length = wkn.Length; i < length; ++i)
         {
           index = GetChildNodeIndex(wkn[i]);
 
           if (currentNode._childNodes[index] is null)
           {
-            currentNode._childNodes[index] = new WknTrie(i == lastIndex);
+            currentNode._childNodes[index] = new WknTrie(false);
           }
 
-          currentNode = currentNode._childNodes[index]!;
+          currentNode = currentNode._childNodes[index];
         }
+        currentNode._isWordEnd = true;
       }
     }
 
@@ -41,7 +42,7 @@ namespace TrieImplementation
       {
         for (int i = 0, length = wkn.Length; i < length; ++i)
         {
-          currentNode = currentNode._childNodes[GetChildNodeIndex(wkn[i])]!;
+          currentNode = currentNode._childNodes[GetChildNodeIndex(wkn[i])];
 
           if (currentNode is null)
           {

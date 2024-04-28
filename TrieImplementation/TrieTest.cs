@@ -14,10 +14,12 @@ namespace TrieImplementation
 
       // Act
       bool resultFound = trie.Contains(trie, "904318");
+      bool resultFound2 = trie.Contains(trie, "A0RFDZ");
       bool resultNotFound = trie.Contains(trie, "2435");
 
       // Assert
       Assert.IsTrue(resultFound);
+      Assert.IsTrue(resultFound2);
       Assert.IsFalse(resultNotFound);
     }
   }
